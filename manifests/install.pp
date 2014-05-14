@@ -130,7 +130,6 @@ define nodejs::install (
     command => "tar -xzvf ${node_filename} -C ${node_unpack_folder} --strip-components=1",
     path    => '/usr/bin:/bin:/usr/sbin:/sbin',
     cwd     => $::nodejs::params::install_dir,
-    user    => 'root',
     unless  => "test -f ${node_symlink_target}",
     require => [
       File["nodejs-check-tar-${node_version}"],
@@ -184,7 +183,6 @@ define nodejs::install (
       command     => 'sh install-npm.sh',
       path        => ["${node_unpack_folder}/bin", '/bin', '/usr/bin'],
       cwd         => $node_unpack_folder,
-      user        => 'root',
       environment => ['clean=yes', "npm_config_prefix=${node_unpack_folder}"],
       unless      => "test -f ${node_unpack_folder}/bin/npm",
       require     => [
